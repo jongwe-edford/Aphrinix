@@ -1,0 +1,27 @@
+server:
+  port: 9003
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9002/eureka
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+spring:
+  application:
+    name: SHOPS-SERVICE
+  data:
+    mongodb:
+      database: shop_auth_db
+      password: 1234
+      host: localhost
+      port: 27017
+      uri: mongodb://localhost:27017/shops
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: true
+

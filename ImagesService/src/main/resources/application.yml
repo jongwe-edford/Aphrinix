@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: IMAGES-SERVICE
+  datasource:
+    password: 1234
+    username: postgres
+    url: jdbc:postgresql://localhost:5432/aphrinix_images_db
+  jpa:
+    hibernate:
+      ddl-auto: create
+      use-new-id-generator-mappings: true
+    generate-ddl: true
+    show-sql: true
+server:
+  port: 9004
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9002/eureka
+  instance:
+    hostname: localhost
+    prefer-ip-address: true

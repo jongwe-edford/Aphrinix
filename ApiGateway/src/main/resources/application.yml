@@ -1,0 +1,33 @@
+
+server:
+  port: 9000
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9002/eureka
+  instance:
+    hostname: localhost
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:4200"
+            allowedMethods:
+              - GET
+      routes:
+        - id: SHOP_AUTH_SERVICE
+          uri: lb://SHOP-AUTH-SERVICE
+          predicates:
+            - Path=/shop/auth/**
+        - id: SHOPS_SERVICE
+          uri: lb://SHOPS-SERVICE
+          predicates:
+            - Path=/shops/**

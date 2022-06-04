@@ -1,0 +1,9 @@
+server:
+  port: 9002
+spring:
+  application:
+    name: SERVICE-DISCOVERY
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
