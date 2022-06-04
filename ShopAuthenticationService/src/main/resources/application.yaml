@@ -18,6 +18,7 @@ spring:
     name: SHOP-AUTH-SERVICE
 server:
   port: 9001
+  address: 172.26.128.1
 eureka:
   client:
     service-url:

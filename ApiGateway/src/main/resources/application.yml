@@ -1,6 +1,7 @@
 
 server:
   port: 9000
+  address: 172.26.128.1
 
 
 eureka:

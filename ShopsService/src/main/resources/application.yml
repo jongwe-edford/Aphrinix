@@ -1,5 +1,6 @@
 server:
   port: 9003
+  address: 172.26.128.1
 eureka:
   client:
     service-url:

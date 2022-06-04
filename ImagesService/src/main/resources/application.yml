@@ -13,6 +13,7 @@ spring:
     show-sql: true
 server:
   port: 9004
+  address: 172.26.128.1
 
 eureka:
   client:
