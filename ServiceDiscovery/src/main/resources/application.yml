@@ -1,6 +1,6 @@
 server:
   port: 9002
-  address: 172.26.128.1
+  address: 192.168.121.1
 spring:
   application:
     name: SERVICE-DISCOVERY

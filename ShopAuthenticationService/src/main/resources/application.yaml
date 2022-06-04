@@ -18,11 +18,11 @@ spring:
     name: SHOP-AUTH-SERVICE
 server:
   port: 9001
-  address: 172.26.128.1
+  address: 192.168.121.1
 eureka:
   client:
     service-url:
-      defaultZone: http://172.26.128.1:9002/eureka
+      defaultZone: http://192.168.121.1:9002/eureka
   instance:
     hostname: localhost
     prefer-ip-address: true
