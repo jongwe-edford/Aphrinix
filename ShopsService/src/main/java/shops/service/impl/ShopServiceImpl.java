@@ -22,9 +22,11 @@ public class ShopServiceImpl implements ShopService {
     private final RestTemplate restTemplate;
 
     @Override
-    public Shop saveShop(ShopRegistrationRequest request, HttpServletRequest servletRequest) throws EmailAlreadyExistException {
-        String url = "http://SHOP-AUTH-SERVICE/shop/auth/{email}";
-        User user = restTemplate.getForObject(url, User.class, request.getEmail());
+    public Shop saveShop(ShopRegistrationRequest request, HttpServletRequest servletRequest,String authorizationToken) throws EmailAlreadyExistException {
+        String token=authorizationToken.substring(7);
+        System.out.println("Token   "+token);
+        String url = "http://SHOP-AUTH-SERVICE/shop/auth/u?token={token}";
+        User user = restTemplate.getForObject(url, User.class, token);
         if (shopRepository.existsByShopAdmin(user))
             throw new EmailAlreadyExistException("A shop with the provided email already exist");
 
@@ -59,5 +61,10 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public List<Shop> getAllShops() {
         return null;
+    }
+
+    @Override
+    public void addShopManager(String email,String shopId) {
+
     }
 }

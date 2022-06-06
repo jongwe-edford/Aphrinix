@@ -18,8 +18,9 @@ public class ShopsController {
     private final ShopService shopService;
 
     @PostMapping(path = "create")
-    public ResponseEntity<Shop> createShop(@RequestBody ShopRegistrationRequest shopRegistrationRequest, HttpServletRequest request) throws EmailAlreadyExistException {
-        return new ResponseEntity<>(shopService.saveShop(shopRegistrationRequest, request), HttpStatus.CREATED);
+    public ResponseEntity<Shop> createShop(@RequestBody ShopRegistrationRequest shopRegistrationRequest, HttpServletRequest request,@RequestHeader("Authorization") String authorizationToken) throws EmailAlreadyExistException {
+        System.out.println("Authorization header::"+authorizationToken);
+        return new ResponseEntity<>(shopService.saveShop(shopRegistrationRequest, request,authorizationToken), HttpStatus.CREATED);
     }
 
     @GetMapping("/{shopId}")

@@ -1,10 +1,9 @@
 server:
-  port: 9003
-  address: 192.168.121.1
+  port: 8810
 eureka:
   client:
     service-url:
-      defaultZone: http://192.168.121.1:9002/eureka
+      defaultZone: http://localhost:8761/eureka
   instance:
     hostname: localhost
     prefer-ip-address: true
@@ -13,11 +12,12 @@ spring:
     name: SHOPS-SERVICE
   data:
     mongodb:
-      database: shop_auth_db
-      password: 1234
+      database: shops
+      password: password
       host: localhost
       port: 27017
       uri: mongodb://localhost:27017/shops
+      username: root
   servlet:
     multipart:
       max-file-size: 5MB

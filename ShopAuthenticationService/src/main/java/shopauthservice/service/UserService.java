@@ -23,6 +23,7 @@ public interface UserService {
 
     User getCurrentUserFromToken();
 
+    User getUser(String token) throws UserNotFoundException;
     void forgotPassword(String email) throws UserNotFoundException;
 
     void resendPasswordResetToken(String email) throws UserNotFoundException;

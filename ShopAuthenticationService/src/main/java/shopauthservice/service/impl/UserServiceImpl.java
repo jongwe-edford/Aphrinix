@@ -151,6 +151,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public User getUser(String token) throws UserNotFoundException {
+        String email=jwtUtil.getEmailFromToken(token);
+        return userRepository.findByEmail(email).orElseThrow(()->new UserNotFoundException("No account with the provided credentials exist"));
+    }
+
+    @Override
     public void forgotPassword(String email) throws UserNotFoundException {
         passwordResetService.forgotPassword(email);
     }

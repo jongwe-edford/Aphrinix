@@ -62,9 +62,11 @@ public class ShopAuthServiceController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+
+
     @GetMapping(path = "u")
-    public ResponseEntity<?> getUser() {
-        return ResponseEntity.ok(shopAuthService.getCurrentUserFromToken());
+    public ResponseEntity<?> getUser(@RequestParam(value = "token") String token) throws UserNotFoundException {
+        return ResponseEntity.ok(shopAuthService.getUser(token));
     }
 
     @GetMapping(path = "{email}")

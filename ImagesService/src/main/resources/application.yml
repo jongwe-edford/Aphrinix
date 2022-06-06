@@ -1,10 +1,10 @@
 spring:
   application:
     name: IMAGES-SERVICE
-  datasource:
-    password: 1234
-    username: postgres
-    url: jdbc:postgresql://localhost:5432/aphrinix_images_db
+#  datasource:
+#    password: 1234
+#    username: postgres
+#    url: jdbc:postgresql://localhost:5432/aphrinix_images_db
   jpa:
     hibernate:
       ddl-auto: create
@@ -12,13 +12,13 @@ spring:
     generate-ddl: true
     show-sql: true
 server:
-  port: 9004
-  address: 192.168.121.1
+  port: 8811
+
 
 eureka:
   client:
     service-url:
-      defaultZone: http://192.168.121.1:9002/eureka
+      defaultZone: http://localhost:8761/eureka
   instance:
     hostname: localhost
     prefer-ip-address: true
