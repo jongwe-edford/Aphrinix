@@ -1,7 +1,9 @@
 package shops.service;
 
 import shops.exception.EmailAlreadyExistException;
+import shops.exception.ShopManagerAlreadyExistInShop;
 import shops.model.Shop;
+import shops.model.User;
 import shops.payload.request.ShopRegistrationRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,5 +15,6 @@ public interface ShopService {
     Shop getShopByEmail(String email);
     List<Shop> getAllShops();
 
-    void addShopManager(String email,String shopId);
+    void sendShopManagerRegistrationLink(String email, String shopId);
+    String  addShopManager(User user,String shopId) throws ShopManagerAlreadyExistInShop;
 }

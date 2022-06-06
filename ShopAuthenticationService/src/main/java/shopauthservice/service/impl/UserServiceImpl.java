@@ -2,12 +2,11 @@ package shopauthservice.service.impl;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.AllArgsConstructor;
+import net.minidev.json.JSONObject;
 import org.apache.http.HttpStatus;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseCookie;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,6 +18,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.web.client.RestTemplate;
 import shopauthservice.exception.AccountWithEmailAlreadyExist;
 import shopauthservice.exception.PasswordResetTokenExpiredException;
 import shopauthservice.exception.RefreshTokenExpired;
@@ -42,10 +43,7 @@ import shopauthservice.util.JwtUtil;
 import javax.security.auth.login.AccountNotFoundException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @AllArgsConstructor
 @Service
@@ -58,6 +56,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final AccountActivationService accountActivationService;
     private final PasswordResetService passwordResetService;
     private final RefreshTokenService refreshTokenService;
+    private final RestTemplate restTemplate;
 
     @Override
     public String register(RegistrationRequest request) throws AccountWithEmailAlreadyExist {
@@ -152,8 +151,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User getUser(String token) throws UserNotFoundException {
-        String email=jwtUtil.getEmailFromToken(token);
-        return userRepository.findByEmail(email).orElseThrow(()->new UserNotFoundException("No account with the provided credentials exist"));
+        String email = jwtUtil.getEmailFromToken(token);
+        return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("No account with the provided credentials exist"));
     }
 
     @Override
@@ -183,9 +182,66 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return loginResponse;
     }
 
+    @Override
+    public String registerShopManager(String shopId, RegistrationRequest request) throws AccountWithEmailAlreadyExist {
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new AccountWithEmailAlreadyExist("An account already exist");
+        }
+
+        Set<Role> roleSet = new HashSet<>();
+        var role = new Role(UserRole.ROLE_SHOP_MANAGER);
+        roleSet.add(role);
+
+        User user = User
+                .builder()
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .lastname(request.getLastname())
+                .firstname(request.getFirstname())
+                .enabled(true)
+                .roles(roleSet)
+                .build();
+        User saved = userRepository.save(user);
+
+        AccountActivationToken activationToken = AccountActivationToken
+                .builder()
+                .token(UUID.randomUUID().toString())
+                .email(user.getEmail())
+                .createdAt(Instant.now())
+                .used(false)
+                .expiration(Instant.now().plus(15, ChronoUnit.MINUTES))
+                .build();
+        accountActivationService.saveToken(activationToken);
+        addShopAdmin(saved,shopId);
+        return "Registration successful";
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
+
+    void addShopAdmin(User user, String shopId) {
+        String postUrl = "http://SHOPS-SERVICE//shops/managers/add/{{shopId}}";
+        //Json body
+        Map<String, Object> shopManager = new JSONObject();
+        shopManager.put("firstname", user.getFirstname());
+        shopManager.put("lastname", user.getLastname());
+        shopManager.put("email", user.getEmail());
+        shopManager.put("photoUrl", user.getPhotoUrl());
+        shopManager.put("shopId", shopId);
+        //Headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> httpEntity = new HttpEntity<>(shopManager.toString(), headers);
+        String shopAdminAddition = restTemplate.postForObject(postUrl, httpEntity, String.class, shopId);
+        System.out.println(shopAdminAddition);
+        assert shopAdminAddition != null;
+        if (shopAdminAddition.isEmpty())
+            userRepository.delete(user);
+        else
+            System.out.println(shopAdminAddition);
     }
 }

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    Hi <p th:text="${receiver}"></p>
+    <p><span th:text="${shop.getName()}"></span> <span> wants you the a manager for their shop</span></p>
+    <p >Click the link below to register an account</p>
+    <a th:href="@{url}" ><span>Register now</span></a>
+</div>
+</body>
+</html>

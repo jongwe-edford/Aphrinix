@@ -18,6 +18,21 @@ spring:
       port: 27017
       uri: mongodb://localhost:27017/shops
       username: root
+  mail:
+    host: localhost
+    port: 1025
+    username: hello
+    password: hello
+    properties:
+      smtp:
+        ssl:
+          trust: "*"
+        auth: true
+        starttls:
+          enable: true
+        connection-timeout: 5000
+        timeout: 5000
+        write-timeout: 5000
   servlet:
     multipart:
       max-file-size: 5MB

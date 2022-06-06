@@ -33,6 +33,11 @@ public class ShopAuthServiceController {
         return ResponseEntity.ok(shopAuthService.register(registrationRequest));
     }
 
+    @PostMapping(path = "register/manager/{shopId}")
+    public ResponseEntity<?> registerShopManager(@PathVariable("shopId") String shopId,@RequestBody RegistrationRequest registrationRequest) throws AccountWithEmailAlreadyExist {
+        return ResponseEntity.ok(shopAuthService.registerShopManager(shopId,registrationRequest));
+    }
+
     @PostMapping(path = "activate")
     public ResponseEntity<?> activateAccount(@RequestParam(value = "token") String token) {
         return ResponseEntity.ok(shopAuthService.activateAccount(token));
@@ -62,7 +67,10 @@ public class ShopAuthServiceController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
+    @PostMapping(path = "shop")
+    public ResponseEntity<String> getShopId(@RequestParam("id") String shopId) {
+        return new ResponseEntity<>(shopId, HttpStatus.OK);
+    }
 
     @GetMapping(path = "u")
     public ResponseEntity<?> getUser(@RequestParam(value = "token") String token) throws UserNotFoundException {
@@ -75,7 +83,7 @@ public class ShopAuthServiceController {
     }
 
     @PostMapping(path = "refresh")
-    public ResponseEntity<LoginResponse> refreshToken(@RequestParam("token") String token) throws  RefreshTokenExpired {
+    public ResponseEntity<LoginResponse> refreshToken(@RequestParam("token") String token) throws RefreshTokenExpired {
         return ResponseEntity.ok(shopAuthService.refreshToken(token));
     }
 

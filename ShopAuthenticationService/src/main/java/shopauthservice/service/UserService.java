@@ -33,5 +33,7 @@ public interface UserService {
     void resendActivationToken(String email);
     LoginResponse refreshToken(String token) throws RefreshTokenExpired;
 
+    String registerShopManager(String shopId,RegistrationRequest registrationRequest) throws AccountWithEmailAlreadyExist;
+
 
 }
