@@ -92,7 +92,7 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public String addShopManager(User user, String shopId) throws ShopManagerAlreadyExistInShop {
-        Shop shop = shopRepository.findByShopId("16f8294e-58c6-4c98-87ab-d140b1c1450c");
+        Shop shop = shopRepository.findByShopId(shopId);
         System.out.println(shop.toString());
         ShopManager shopManager = ShopManager
                 .builder()

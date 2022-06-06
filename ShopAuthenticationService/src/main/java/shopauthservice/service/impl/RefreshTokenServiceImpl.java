@@ -15,6 +15,7 @@ import shopauthservice.util.JwtUtil;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -48,6 +49,12 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
             throw new RefreshTokenExpired("Token expired");
         User user = userRepository.findByEmail(refreshToken.getEmail()).orElseThrow();
         ResponseCookie responseCookie = jwtUtil.generateJwtCookie(user);
-        return new LoginResponse(responseCookie.getValue(), generateToken(user.getEmail()));
+        LoginResponse loginResponse= LoginResponse
+                .builder()
+                .accessToken(responseCookie.getValue())
+                .refreshToken(generateToken(user.getEmail()))
+                .roles(user.getRoles().stream().map(role -> role.getRole().name()).collect(Collectors.toList()))
+                .build();
+        return loginResponse;
     }
 }

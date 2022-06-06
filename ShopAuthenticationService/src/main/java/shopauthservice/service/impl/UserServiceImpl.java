@@ -44,6 +44,7 @@ import javax.security.auth.login.AccountNotFoundException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -116,8 +117,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             User user = (User) authentication.getPrincipal();
             System.out.println(user.toString());
             ResponseCookie responseCookie = jwtUtil.generateJwtCookie(user);
+            LoginResponse loginResponse= LoginResponse
+                    .builder()
+                    .accessToken(responseCookie.getValue())
+                    .refreshToken(refreshTokenService.generateToken(user.getEmail()))
+                    .roles(user.getRoles().stream().map(role -> role.getRole().name()).collect(Collectors.toList()))
+                    .build();
             responseEntity = ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, responseCookie.toString())
-                    .body(new LoginResponse(responseCookie.getValue(), refreshTokenService.generateToken(user.getEmail())));
+                    .body(loginResponse);
         } catch (BadCredentialsException | ExpiredJwtException e) {
             responseEntity = ResponseEntity.status(HttpStatus.SC_UNAUTHORIZED).body("Email or password invalid");
         }
@@ -223,7 +230,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     void addShopAdmin(User user, String shopId) {
-        String postUrl = "http://SHOPS-SERVICE//shops/managers/add/{{shopId}}";
+        System.out.println("Shop id"+shopId);
+        String postUrl = "http://SHOPS-SERVICE//shops/managers/add/{shopId}";
         //Json body
         Map<String, Object> shopManager = new JSONObject();
         shopManager.put("firstname", user.getFirstname());

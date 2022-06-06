@@ -33,8 +33,8 @@ public class ShopAuthServiceController {
         return ResponseEntity.ok(shopAuthService.register(registrationRequest));
     }
 
-    @PostMapping(path = "register/manager/{shopId}")
-    public ResponseEntity<?> registerShopManager(@PathVariable("shopId") String shopId,@RequestBody RegistrationRequest registrationRequest) throws AccountWithEmailAlreadyExist {
+    @PostMapping(path = "register/manager")
+    public ResponseEntity<?> registerShopManager(@RequestParam("shopId") String shopId,@RequestBody RegistrationRequest registrationRequest) throws AccountWithEmailAlreadyExist {
         return ResponseEntity.ok(shopAuthService.registerShopManager(shopId,registrationRequest));
     }
 
