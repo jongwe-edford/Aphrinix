@@ -9,7 +9,8 @@
     Hi <p th:text="${receiver}"></p>
     <p><span th:text="${shop.getName()}"></span> <span> wants you the a manager for their shop</span></p>
     <p >Click the link below to register an account</p>
-    <a th:href="@{url}" ><span>Register now</span></a>
+    <a th:href="${url}" ><span>Register now</span></a>
+    <p th:text="${url}"></p>
 </div>
 </body>
 </html>

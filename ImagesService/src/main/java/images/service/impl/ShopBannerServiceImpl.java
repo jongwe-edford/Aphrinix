@@ -61,7 +61,6 @@ public class ShopBannerServiceImpl implements ShopBannerService {
     @Override
     public String getBannerUrl(String shopID, HttpServletRequest servletRequest) {
         ShopBanner shopBanner = shopBannerRepository.findByShopId(shopID);
-        System.out.println(shopBanner.toString());
         ShopBannerActivityLog shopBannerActivityLog =
                 ShopBannerActivityLog
                         .builder()
@@ -114,7 +113,6 @@ public class ShopBannerServiceImpl implements ShopBannerService {
                         .ipAddress(request.getRemoteAddr())
                         .build();
         shopBannerActivityLogService.saveActivity(shopBannerActivityLog);
-        System.out.println(shopBanner.toString());
         return shopBanner;
     }
 

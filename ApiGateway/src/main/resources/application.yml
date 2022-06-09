@@ -29,3 +29,11 @@ spring:
           uri: lb://SHOPS-SERVICE
           predicates:
             - Path=/shops/**
+management:
+  endpoints:
+    app:
+      cors:
+        allowed-credentials: false
+        allowed-methods: GET, POST
+        allowed-origins: http:/domain.com
+        max-age: 1800

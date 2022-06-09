@@ -30,8 +30,13 @@ public class ShopsController {
         return shopService.getShopByID(shopId);
     }
 
+    @GetMapping("admin/{token}")
+    public Shop getShopByAdmin(@PathVariable("token") String email) {
+        return shopService.findByShopAdmin(email);
+    }
+
     @GetMapping(path = "manager")
-    public ResponseEntity<String> sendShopManagerRegistrationLink(@RequestParam("email") String email, @RequestParam("id") String shopId) {
+    public ResponseEntity<Void> sendShopManagerRegistrationLink(@RequestParam("email") String email, @RequestParam("id") String shopId) {
         shopService.sendShopManagerRegistrationLink(email, shopId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -40,4 +45,6 @@ public class ShopsController {
     public ResponseEntity<?> addShopManager(@PathVariable("shopId") String shopId, @RequestBody User user) throws ShopManagerAlreadyExistInShop {
         return ResponseEntity.ok(shopService.addShopManager(user, shopId));
     }
+
+
 }

@@ -6,6 +6,8 @@ import images.service.ShopBannerActivityLogService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class ShopBannerActivityLogServiceImpl implements ShopBannerActivityLogService {
@@ -14,5 +16,10 @@ public class ShopBannerActivityLogServiceImpl implements ShopBannerActivityLogSe
     @Override
     public void saveActivity(ShopBannerActivityLog shopBannerActivityLog) {
         activityLogRepository.save(shopBannerActivityLog);
+    }
+
+    @Override
+    public List<ShopBannerActivityLog> activitiesList(String shopId) {
+        return null;
     }
 }

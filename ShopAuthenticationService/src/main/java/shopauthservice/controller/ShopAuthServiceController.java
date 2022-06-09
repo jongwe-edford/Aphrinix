@@ -34,8 +34,8 @@ public class ShopAuthServiceController {
     }
 
     @PostMapping(path = "register/manager")
-    public ResponseEntity<?> registerShopManager(@RequestParam("shopId") String shopId,@RequestBody RegistrationRequest registrationRequest) throws AccountWithEmailAlreadyExist {
-        return ResponseEntity.ok(shopAuthService.registerShopManager(shopId,registrationRequest));
+    public ResponseEntity<?> registerShopManager(@RequestParam("shopId") String shopId,@RequestParam("email") String email,@RequestBody RegistrationRequest registrationRequest) throws AccountWithEmailAlreadyExist {
+        return ResponseEntity.ok(shopAuthService.registerShopManager(shopId,email,registrationRequest));
     }
 
     @PostMapping(path = "activate")

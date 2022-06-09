@@ -27,6 +27,7 @@ public class User implements UserDetails {
     private String firstname;
     private String lastname;
     private String photoUrl;
+    private String shopId;
     private boolean enabled=true;
     private Set<Role> roles;
 

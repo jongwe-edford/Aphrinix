@@ -7,6 +7,8 @@ import shops.model.ShopManager;
 import shops.repository.ShopManagerRepository;
 import shops.service.ShopManagerService;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class ShopManagerServiceImpl implements ShopManagerService {
@@ -24,5 +26,10 @@ public class ShopManagerServiceImpl implements ShopManagerService {
     public String delete(String id) {
         shopManagerRepository.deleteById(id);
         return "Shop manager "+id+" deleted successfully";
+    }
+
+    @Override
+    public List<ShopManager> findShopManagersByShopId(String shopId) {
+        return shopManagerRepository.findAllByShopId(shopId);
     }
 }

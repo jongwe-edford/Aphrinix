@@ -12,7 +12,7 @@ import java.util.List;
 public interface ShopService {
     Shop saveShop(ShopRegistrationRequest request, HttpServletRequest servletRequest,String token) throws EmailAlreadyExistException;
     Shop getShopByID(String id);
-    Shop getShopByEmail(String email);
+    Shop findByShopAdmin(String email);
     List<Shop> getAllShops();
 
     void sendShopManagerRegistrationLink(String email, String shopId);

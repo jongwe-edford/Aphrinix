@@ -1,6 +1,7 @@
 package shopauthservice.service;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 import shopauthservice.exception.AccountWithEmailAlreadyExist;
 import shopauthservice.exception.PasswordResetTokenExpiredException;
 import shopauthservice.exception.RefreshTokenExpired;
@@ -20,9 +21,7 @@ public interface UserService {
     User getUserByEmail(String email) throws AccountNotFoundException;
 
     String activateAccount(String token);
-
-    User getCurrentUserFromToken();
-
+    void updateProfilePhoto(String email, MultipartFile file);
     User getUser(String token) throws UserNotFoundException;
     void forgotPassword(String email) throws UserNotFoundException;
 
@@ -33,7 +32,7 @@ public interface UserService {
     void resendActivationToken(String email);
     LoginResponse refreshToken(String token) throws RefreshTokenExpired;
 
-    String registerShopManager(String shopId,RegistrationRequest registrationRequest) throws AccountWithEmailAlreadyExist;
-
+    String registerShopManager(String shopId,String email,RegistrationRequest registrationRequest) throws AccountWithEmailAlreadyExist;
+    User getCurrentUserFromToken();
 
 }

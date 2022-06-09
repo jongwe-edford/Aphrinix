@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 import shopauthservice.exception.AccountWithEmailAlreadyExist;
 import shopauthservice.exception.PasswordResetTokenExpiredException;
 import shopauthservice.exception.RefreshTokenExpired;
@@ -149,6 +150,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public void updateProfilePhoto(String email, MultipartFile file) {
+
+    }
+
+    @Override
     public User getCurrentUserFromToken() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (user == null)
@@ -190,8 +196,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public String registerShopManager(String shopId, RegistrationRequest request) throws AccountWithEmailAlreadyExist {
-        if (userRepository.existsByEmail(request.getEmail())) {
+    public String registerShopManager(String shopId, String email,RegistrationRequest request) throws AccountWithEmailAlreadyExist {
+        if (userRepository.existsByEmail(email)) {
             throw new AccountWithEmailAlreadyExist("An account already exist");
         }
 
@@ -201,10 +207,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         User user = User
                 .builder()
-                .email(request.getEmail())
+                .email(email)
                 .password(passwordEncoder.encode(request.getPassword()))
                 .lastname(request.getLastname())
                 .firstname(request.getFirstname())
+                .shopId(shopId)
                 .enabled(true)
                 .roles(roleSet)
                 .build();

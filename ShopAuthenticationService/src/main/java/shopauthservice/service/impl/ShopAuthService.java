@@ -15,6 +15,7 @@ public class ShopAuthService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        System.out.println("email "+email);
         return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
     }

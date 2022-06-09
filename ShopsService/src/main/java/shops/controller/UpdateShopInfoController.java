@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import shops.service.UpdateShopInfoService;
 
 @RestController
-@RequestMapping(path = "shop/update")
+@RequestMapping(path = "shops/update")
 @AllArgsConstructor
 public class UpdateShopInfoController {
     private final UpdateShopInfoService updateShopInfoService;

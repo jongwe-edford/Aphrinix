@@ -23,13 +23,13 @@ import java.util.function.Predicate;
 @Component
 @AllArgsConstructor
 public class AuthenticationFilter implements GatewayFilter {
-    private JwtUtil jwtUtil;
+    private final JwtUtil jwtUtil;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
 
-        final List<String> apiEndpoints = List.of("/shop/auth/register", "/shop/auth/login");
+        final List<String> apiEndpoints = List.of("/shop/auth/register", "/shop/auth/login","/shop/auth/refresh");
 
         Predicate<ServerHttpRequest> isApiSecured = r -> apiEndpoints.stream()
                 .noneMatch(uri -> r.getURI().getPath().contains(uri));

@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class RefreshTokenServiceImpl implements RefreshTokenService {
     private final RefreshTokenRepository repository;
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
 
     @Override
@@ -49,12 +49,11 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
             throw new RefreshTokenExpired("Token expired");
         User user = userRepository.findByEmail(refreshToken.getEmail()).orElseThrow();
         ResponseCookie responseCookie = jwtUtil.generateJwtCookie(user);
-        LoginResponse loginResponse= LoginResponse
+        return LoginResponse
                 .builder()
                 .accessToken(responseCookie.getValue())
                 .refreshToken(generateToken(user.getEmail()))
                 .roles(user.getRoles().stream().map(role -> role.getRole().name()).collect(Collectors.toList()))
                 .build();
-        return loginResponse;
     }
 }

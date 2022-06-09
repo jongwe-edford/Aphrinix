@@ -17,7 +17,7 @@ public class GatewayConfig {
         return builder
                 .routes()
                 .route("shop-auth", r -> r.path("/shop/auth/**").filters(f -> f.filter(filter)).uri("lb://SHOP-AUTH-SERVICE"))
-                .route("shops", r -> r.path("/shops/**").filters(f -> f.filter(filter)).uri("lb://SHOPS-SERVICE"))
+                .route("shops", r -> r.path("/shops/**","/manager/**").filters(f -> f.filter(filter)).uri("lb://SHOPS-SERVICE"))
                 .build();
     }
 

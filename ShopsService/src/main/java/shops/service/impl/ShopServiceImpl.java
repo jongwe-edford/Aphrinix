@@ -31,7 +31,6 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public Shop saveShop(ShopRegistrationRequest request, HttpServletRequest servletRequest, String authorizationToken) throws EmailAlreadyExistException {
         String token = authorizationToken.substring(7);
-        System.out.println("Token   " + token);
         String url = "http://SHOP-AUTH-SERVICE/shop/auth/u?token={token}";
         User user = restTemplate.getForObject(url, User.class, token);
         if (shopRepository.existsByShopAdmin(user))
@@ -61,8 +60,11 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    public Shop getShopByEmail(String email) {
-        return null;
+    public Shop findByShopAdmin(String token) {
+        String url = "http://SHOP-AUTH-SERVICE/shop/auth/u?token={token}";
+        User user = restTemplate.getForObject(url, User.class, token);
+        System.out.println(user.toString());
+        return shopRepository.findByShopAdmin(user);
     }
 
     @Override
@@ -81,8 +83,9 @@ public class ShopServiceImpl implements ShopService {
                 .subject("Registration as a shop manager")
                 .build();
         System.out.println(email);
-        String url = "http://localhost:8812/shop/auth/shop?id=" + shopId;
+        String url = "http://localhost:4200/shop/register?id=" + shopId+"&email="+receiver;
 
+        System.out.println("Url::"+url);
         Context context = new Context();
         context.setVariable("url", url);
         context.setVariable("shop", shop);

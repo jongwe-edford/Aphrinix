@@ -1,16 +1,18 @@
 spring:
   application:
     name: IMAGES-SERVICE
-#  datasource:
-#    password: 1234
-#    username: postgres
-#    url: jdbc:postgresql://localhost:5432/aphrinix_images_db
+  datasource:
+    password: 1234
+    username: postgres
+    url: jdbc:postgresql://localhost:5432/Images
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: create
       use-new-id-generator-mappings: true
     generate-ddl: true
     show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 server:
   port: 8811
 
