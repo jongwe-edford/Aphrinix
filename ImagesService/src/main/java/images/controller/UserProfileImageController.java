@@ -1,7 +1,5 @@
 package images.controller;
-
-import images.service.ShopBannerService;
-import images.service.UserProfilePhotoService;
+import images.service.profile_picture.UserProfilePhotoService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

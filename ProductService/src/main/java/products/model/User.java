@@ -1,5 +1,6 @@
-package shops.model;
+package products.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,11 +17,13 @@ import java.util.Set;
 public class User {
     private String id;
     private String email;
+    @JsonIgnore
     private String password;
     private String firstname;
     private String lastname;
     private String photoUrl;
-    private boolean enabled = false;
+    private String shopId;
+    private boolean enabled=true;
     private Set<String> roles;
 
 }

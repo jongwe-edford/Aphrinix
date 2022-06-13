@@ -1,8 +1,8 @@
-package images.service.impl;
+package images.service.profile_picture.impl;
 
 import images.model.UserProfileActivityLog;
 import images.repository.UserProfilePhotoActivityLogRepository;
-import images.service.UserProfilePhotoActivityLogService;
+import images.service.profile_picture.UserProfilePhotoActivityLogService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

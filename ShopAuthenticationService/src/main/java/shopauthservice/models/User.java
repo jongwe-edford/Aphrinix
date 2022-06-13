@@ -29,11 +29,11 @@ public class User implements UserDetails {
     private String photoUrl;
     private String shopId;
     private boolean enabled=true;
-    private Set<Role> roles;
+    private Set<String> roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getRole().name())).collect(Collectors.toSet());
+        return roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
     }
 
     @Override

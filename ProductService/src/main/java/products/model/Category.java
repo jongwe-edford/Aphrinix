@@ -1,15 +1,18 @@
-package shops.model;
+package products.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
-import shops.model.enums.UserRole;
 
-@Document(collection = "roles")
+@Document(collation = "products")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Role {
-    private UserRole role;
+public class Category {
+    private String id;
+    private String name;
+    private String imageUrl;
+    private int numberVisited;
+
 }

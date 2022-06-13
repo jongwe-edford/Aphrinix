@@ -1,4 +1,4 @@
-package images.service;
+package images.service.shop_banner;
 
 import images.model.ShopBanner;
 import org.springframework.http.ResponseEntity;

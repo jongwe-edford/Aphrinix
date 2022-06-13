@@ -16,8 +16,17 @@ public class GatewayConfig {
     public RouteLocator routes(RouteLocatorBuilder builder) {
         return builder
                 .routes()
-                .route("shop-auth", r -> r.path("/shop/auth/**").filters(f -> f.filter(filter)).uri("lb://SHOP-AUTH-SERVICE"))
-                .route("shops", r -> r.path("/shops/**","/manager/**").filters(f -> f.filter(filter)).uri("lb://SHOPS-SERVICE"))
+                .route("shop-auth", r -> r.path("/shop/auth/**")
+                        .filters(f -> f.filter(filter))
+                        .uri("lb://SHOP-AUTH-SERVICE"))
+                .route("shops", r -> r.path("/shops/**", "/manager/**")
+                        .filters(f -> f.filter(filter))
+                        .uri("lb://SHOPS-SERVICE"))
+                .route("products", r -> r.path("/products/**", "/categories/**")
+                        .uri("lb://PRODUCTS-SERVICE"))
+                .route("images", r -> r.path("/images/**")
+                        .filters(f -> f.filter(filter))
+                        .uri("lb://IMAGES-SERVICE"))
                 .build();
     }
 

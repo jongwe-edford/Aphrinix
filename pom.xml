@@ -8,6 +8,7 @@
         <module>ShopsService</module>
         <module>ImagesService</module>
         <module>ServiceRegistry</module>
+        <module>ProductService</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

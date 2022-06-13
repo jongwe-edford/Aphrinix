@@ -1,4 +1,4 @@
-package images.service;
+package images.service.shop_banner;
 
 import images.model.ShopBannerActivityLog;
 

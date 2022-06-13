@@ -66,9 +66,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new AccountWithEmailAlreadyExist("An account already exist");
         }
 
-        Set<Role> roleSet = new HashSet<>();
-        var role = new Role(UserRole.ROLE_SHOP_ADMIN);
-        roleSet.add(role);
+        Set<String> roleSet = new HashSet<>();
+        roleSet.add(UserRole.ROLE_SHOP_ADMIN.name());
 
         User user = User
                 .builder()
@@ -122,7 +121,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                     .builder()
                     .accessToken(responseCookie.getValue())
                     .refreshToken(refreshTokenService.generateToken(user.getEmail()))
-                    .roles(user.getRoles().stream().map(role -> role.getRole().name()).collect(Collectors.toList()))
+                    .roles(new ArrayList<>(user.getRoles()))
                     .build();
             responseEntity = ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, responseCookie.toString())
                     .body(loginResponse);
@@ -201,9 +200,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new AccountWithEmailAlreadyExist("An account already exist");
         }
 
-        Set<Role> roleSet = new HashSet<>();
-        var role = new Role(UserRole.ROLE_SHOP_MANAGER);
-        roleSet.add(role);
+        Set<String> roleSet = new HashSet<>();
+        roleSet.add(UserRole.ROLE_SHOP_ADMIN.name());
 
         User user = User
                 .builder()

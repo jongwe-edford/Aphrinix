@@ -1,6 +1,7 @@
 package images.controller;
 
-import images.service.ShopBannerService;
+
+import images.service.shop_banner.ShopBannerService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

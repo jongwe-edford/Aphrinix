@@ -1,0 +1,43 @@
+server:
+  port: 8814
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+spring:
+  application:
+    name: PRODUCTS-SERVICE
+  data:
+    mongodb:
+      database: products
+      password: password
+      host: localhost
+      port: 27017
+      uri: mongodb://localhost:27017/shops
+      username: root
+  mail:
+    host: localhost
+    port: 1025
+    username: hello
+    password: hello
+    properties:
+      smtp:
+        ssl:
+          trust: "*"
+        auth: true
+        starttls:
+          enable: true
+        connection-timeout: 5000
+        timeout: 5000
+        write-timeout: 5000
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: true
+

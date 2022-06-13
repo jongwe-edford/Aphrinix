@@ -14,6 +14,7 @@ import shopauthservice.util.JwtUtil;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -53,7 +54,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
                 .builder()
                 .accessToken(responseCookie.getValue())
                 .refreshToken(generateToken(user.getEmail()))
-                .roles(user.getRoles().stream().map(role -> role.getRole().name()).collect(Collectors.toList()))
+                .roles(new ArrayList<>(user.getRoles()))
                 .build();
     }
 }

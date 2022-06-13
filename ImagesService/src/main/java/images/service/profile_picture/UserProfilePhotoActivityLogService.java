@@ -1,4 +1,4 @@
-package images.service;
+package images.service.profile_picture;
 
 import images.model.UserProfileActivityLog;
 

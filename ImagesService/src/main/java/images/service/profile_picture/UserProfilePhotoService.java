@@ -1,4 +1,4 @@
-package images.service;
+package images.service.profile_picture;
 
 import images.model.ShopBanner;
 import images.model.UserProfileImage;

@@ -1,11 +1,12 @@
-package images.service.impl;
+package images.service.shop_banner.impl;
 
 import images.model.ShopBanner;
 import images.model.ShopBannerActivityLog;
 import images.model.enums.ActivityType;
 import images.repository.ShopBannerRepository;
-import images.service.ShopBannerActivityLogService;
-import images.service.ShopBannerService;
+
+import images.service.shop_banner.ShopBannerActivityLogService;
+import images.service.shop_banner.ShopBannerService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;

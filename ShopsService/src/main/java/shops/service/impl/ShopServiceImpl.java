@@ -102,6 +102,7 @@ public class ShopServiceImpl implements ShopService {
                 .email(user.getEmail())
                 .firstname(user.getFirstname())
                 .lastname(user.getLastname())
+                .photoUrl(user.getPhotoUrl())
                 .shopId(shopId)
                 .build();
         ShopManager manager = shopManagerService.save(shopManager);

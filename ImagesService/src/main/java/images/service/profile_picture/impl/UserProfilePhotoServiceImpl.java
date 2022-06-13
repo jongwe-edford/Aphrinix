@@ -1,11 +1,11 @@
-package images.service.impl;
+package images.service.profile_picture.impl;
 
 import images.model.UserProfileActivityLog;
 import images.model.UserProfileImage;
 import images.model.enums.ActivityType;
 import images.repository.UserProfilePhotoRepository;
-import images.service.UserProfilePhotoActivityLogService;
-import images.service.UserProfilePhotoService;
+import images.service.profile_picture.UserProfilePhotoActivityLogService;
+import images.service.profile_picture.UserProfilePhotoService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -68,8 +68,6 @@ public class UserProfilePhotoServiceImpl implements UserProfilePhotoService {
                         .ipAddress(request.getRemoteAddr())
                         .build();
         userProfilePhotoActivityLogService.saveActivity(userProfileActivityLog);
-        Map<String ,Object> variables=new HashMap<>();
-        variables.put("email",email);
         return ServletUriComponentsBuilder
                 .fromCurrentContextPath()
                 .path("/images/profile")

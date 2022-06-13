@@ -29,7 +29,12 @@ public class AuthenticationFilter implements GatewayFilter {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
 
-        final List<String> apiEndpoints = List.of("/shop/auth/register", "/shop/auth/login","/shop/auth/refresh");
+        final List<String> apiEndpoints = List.of(
+                "/shop/auth/register",
+                "/shop/auth/login",
+                "/shop/auth/refresh",
+                "/products/d/**"
+        );
 
         Predicate<ServerHttpRequest> isApiSecured = r -> apiEndpoints.stream()
                 .noneMatch(uri -> r.getURI().getPath().contains(uri));
@@ -43,12 +48,12 @@ public class AuthenticationFilter implements GatewayFilter {
             }
 
             final String token = parseJwt(request);
-            System.out.println("Token::-->"+token);
+            System.out.println("Token::-->" + token);
 
             try {
                 jwtUtil.validateToken(token);
             } catch (JwtTokenMalformedException | JwtTokenMissingException e) {
-                 e.printStackTrace();
+                e.printStackTrace();
                 ServerHttpResponse response = exchange.getResponse();
                 response.setStatusCode(HttpStatus.BAD_REQUEST);
 
@@ -61,8 +66,9 @@ public class AuthenticationFilter implements GatewayFilter {
 
         return chain.filter(exchange);
     }
+
     private String parseJwt(ServerHttpRequest request) {
-        String headerAuth =  request.getHeaders().getOrEmpty("Authorization").get(0);
+        String headerAuth = request.getHeaders().getOrEmpty("Authorization").get(0);
         if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
             return headerAuth.substring(7, headerAuth.length());
         }

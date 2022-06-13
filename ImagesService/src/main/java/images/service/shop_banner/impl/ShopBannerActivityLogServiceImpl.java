@@ -1,8 +1,9 @@
-package images.service.impl;
+package images.service.shop_banner.impl;
 
 import images.model.ShopBannerActivityLog;
 import images.repository.ShopBannerActivityLogRepository;
-import images.service.ShopBannerActivityLogService;
+
+import images.service.shop_banner.ShopBannerActivityLogService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
